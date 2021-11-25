@@ -13,7 +13,6 @@ class ListDriverController {
             const users = await prisma.driver.findMany({
                 select:{
                     name: true
-                    
                 }
             })
             return response.json(users)
