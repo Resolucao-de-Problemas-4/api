@@ -1,46 +1,56 @@
-import { PrismaClient } from '.prisma/client'
-import { Request, Response } from 'express'
+import { PrismaClient } from ".prisma/client";
+import { Request, Response } from "express";
+import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 class CreateUserController {
-    async execute(request: Request, response: Response) {
-        try {
-            
-            const { customerName, customerAddress, customerEmail, customerPassword, customerBirthday } = request.body
-            const birthdate = new Date(customerBirthday);
-            
-            const userAlreadyExists = await prisma.user.findFirst({
-                where: {
-                    email: customerEmail
-                }
-            })
+  async execute(request: Request, response: Response) {
+    try {
+      console.log(request.body);
 
-            if (userAlreadyExists) {
-                throw new Error('email already in DB')
-            }
+      const {
+        customerName,
+        customerAddress,
+        customerEmail,
+        customerPassword,
+        customerBirthday,
+      } = request.body;
+     
 
-            await prisma.user.create({
-                data: {
-                    name: customerName,
-                    address: customerAddress,
-                    password: customerPassword,
-                    birthday: birthdate,
-                    email: customerEmail
-                }
-            })
+      const userAlreadyExists = await prisma.user.findFirst({
+        where: {
+          email: customerEmail,
+        },
+      });
 
-            return response.status(201).json({
-                name:customerName,
-                email: customerEmail
-              })
+      if (userAlreadyExists) {
+        throw new Error("email already in DB");
+      }
 
-        } catch (error) {
-            return response.status(400).json({
-                message: error.message
-            })
-        }
+      const salt = bcrypt.genSaltSync(10);
+      const hashPassword = bcrypt.hashSync(customerPassword, salt);
+
+      await prisma.user.create({
+        data: {
+          name: customerName,
+          address: customerAddress,
+          password: hashPassword,
+          birthday: customerBirthday,
+          email: customerEmail,
+        },
+      });
+
+      return response.status(201).json({
+        name: customerName,
+        email: customerEmail,
+      });
+    } catch (error) {
+      return response.status(400).json({
+        message: error.message,
+      });
     }
+  }
 }
 
-export { CreateUserController }
+export { CreateUserController };
