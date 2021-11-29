@@ -6,8 +6,9 @@ const prisma = new PrismaClient();
 
 class CreateUserController {
   async execute(request: Request, response: Response) {
+    
     try {
-      console.log(request.body);
+      
 
       const {
         customerName,
@@ -16,7 +17,9 @@ class CreateUserController {
         customerPassword,
         customerBirthday,
       } = request.body;
-     
+      const date = new Date(customerBirthday)
+      
+      
 
       const userAlreadyExists = await prisma.user.findFirst({
         where: {
@@ -36,7 +39,7 @@ class CreateUserController {
           name: customerName,
           address: customerAddress,
           password: hashPassword,
-          birthday: customerBirthday,
+          birthday: date,
           email: customerEmail,
         },
       });
