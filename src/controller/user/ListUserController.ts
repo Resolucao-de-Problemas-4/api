@@ -8,12 +8,10 @@ class ListUserController {
     
     async execute(request: Request, response: Response): Promise<Response> {
         
-        
         try {
             const users = await prisma.user.findMany({
                 select:{
-                    name: true
-                    
+                    name: true       
                 }
             })
             return response.json(users)

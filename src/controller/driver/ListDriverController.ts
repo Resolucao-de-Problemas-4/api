@@ -7,15 +7,14 @@ class ListDriverController {
     
     
     async execute(request: Request, response: Response): Promise<Response> {
-        
-        
+         
         try {
-            const users = await prisma.driver.findMany({
+            const drivers = await prisma.driver.findMany({
                 select:{
                     name: true
                 }
             })
-            return response.json(users)
+            return response.json(drivers)
         } catch (err) {
             return response.status(400).json({
                 message: err.message

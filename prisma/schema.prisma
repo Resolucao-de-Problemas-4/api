@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,34 +8,34 @@ datasource db {
 }
 
 model user {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
   birthday DateTime
-  address String
+  address  String
   password String
 }
 
-model driver{
-  id Int @id @default(autoincrement())
-  name String
-  CNH String @unique
-  address String
+model driver {
+  id          Int     @id @default(autoincrement())
+  name        String
+  CNH         String  @unique
+  address     String
   phoneNumber String
-  email String @unique
-  status Boolean @default(false)
-  password String
-  car car[]
+  email       String  @unique
+  status      Boolean @default(false)
+  password    String
+  car         car?
 }
 
-model car{
-  plate String @id
-  driver driver @relation(fields: [ownerCNH], references: [CNH])
+model car {
+  plate    String  @id
   ownerCNH String
-  chassi String
-  renavan String
-  year Int
-  model String
-  marca String
-  status Boolean @default(false)
+  chassi   String
+  renavan  String
+  year     Int
+  model    String
+  marca    String
+  status   Boolean @default(false)
+  driver   driver  @relation(fields: [ownerCNH], references: [CNH])
 }
