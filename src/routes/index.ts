@@ -1,13 +1,14 @@
 import {Router} from 'express'
 import { userRoutes } from './user.routes'
 import { driverRoutes } from './driver.routes'
-import { authRoutes } from './auth.routes'
-//import { driverRoutes } from './driver.routes'
+import { authUserRoutes } from './authuser.routes'
+import { authDriverRoutes } from './authdriver.routes'
 
 
 const router = Router()
 
-authRoutes(router)
+authUserRoutes(router)
+authDriverRoutes(router)
 userRoutes(router)
 driverRoutes(router)
 

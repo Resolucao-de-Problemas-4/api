@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 const prismaClient = new PrismaClient();
 
-class AuthController {
+class AuthUserController {
   async execute(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
@@ -36,4 +36,4 @@ class AuthController {
     }
   }
 }
-export { AuthController };
+export { AuthUserController };
