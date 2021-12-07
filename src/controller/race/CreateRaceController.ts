@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
-export interface TokenPayload {
+interface TokenPayload {
   id: string;
   iat: number;
   exp: number;

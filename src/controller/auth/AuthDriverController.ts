@@ -28,7 +28,11 @@ class AuthDriverController {
 
       const token = jwt.sign({ id: driver.id }, "secretrp", { expiresIn: "1d" });
 
-      return res.status(200).json({ name: driver.name, token });
+      delete driver.password
+      delete driver.id
+
+
+      return res.status(200).json({ driver, token });
     } catch (err) {
       return res.status(400).json({
         message: err.message,
