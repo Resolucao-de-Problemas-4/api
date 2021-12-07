@@ -27,6 +27,17 @@ class CreateRaceController {
       const data = jwt.verify(token, "secretrp");
       const { id } = data as TokenPayload;
 
+      const user = await prisma.user.findUnique({
+        where:{
+          id: Number(id)
+        }
+      })
+
+      if(!user){
+        throw new Error("Usuário não encontrado")
+      }
+
+
       await prisma.race.create({
         data: {
           idCliente: Number(id),
