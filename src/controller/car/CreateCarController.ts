@@ -12,7 +12,7 @@ interface TokenPayload {
 class CreateCarController {
   async execute(req: Request, res: Response) {
     try {
-      const { token, plate, chassi, renavan, year, model, marca } = req.body;
+      const { token, plate, chassi, renavam, year, model, marca } = req.body;
 
       const data = jwt.verify(token, "secretrp");
       const { id } = data as TokenPayload;
@@ -42,13 +42,22 @@ class CreateCarController {
           plate,
           ownerCNH: driver.CNH,
           chassi,
-          renavan,
+          renavan:renavam,
           year: Number(year),
           model,
           marca,
         },
       });
-      return res.status(200).json({
+
+      await prisma.driver.update({
+        where:{
+          id:Number(id)
+        },data:{
+          carSigned: true
+        }
+      })
+
+      return res.status(201).json({
         model,
         plate,
       });

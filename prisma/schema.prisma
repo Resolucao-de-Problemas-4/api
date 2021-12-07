@@ -25,6 +25,7 @@ model driver {
   email       String  @unique
   status      Boolean @default(false)
   password    String
+  carSigned Boolean @default(false)
   car         car[]
 }
 
