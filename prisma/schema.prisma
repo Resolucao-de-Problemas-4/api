@@ -39,3 +39,21 @@ model car {
   status   Boolean @default(false)
   driver   driver  @relation(fields: [ownerCNH], references: [CNH])
 }
+
+model race{
+  id String @id @default(uuid())
+  idCliente Int 
+  idDriver Int?
+  dataViagem DateTime
+  horaSolicitacao String
+  horaInicial String?
+  horaFinal String?
+  pagamentoAutorizado Boolean?
+  latitudeOrigem String
+  longitudeOrigem String
+  latitudeFinal String
+  longitudeFinal String
+  avaliacaoViagem Int?
+  viagemConcluida Boolean @default(false)
+  corridaAceita Boolean @default(false)
+}
