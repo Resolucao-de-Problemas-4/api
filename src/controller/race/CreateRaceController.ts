@@ -13,7 +13,6 @@ export interface TokenPayload {
 class CreateRaceController {
   async execute(req: Request, res: Response) {
     const date = new Date();
-
     try {
       const {
         token,
@@ -23,13 +22,10 @@ class CreateRaceController {
         latitudeFinal,
       } = req.body;
 
-      const hour = '14:30';
-      console.log(hour);
+      const hour = date.getHours() + ":" + date.getMinutes();
 
       const data = jwt.verify(token, "secretrp");
       const { id } = data as TokenPayload;
-
-      console.log(id);
 
       await prisma.race.create({
         data: {
@@ -44,12 +40,9 @@ class CreateRaceController {
       });
 
       return res.sendStatus(200).json("HELLO WORLD");
-    } catch {
-      return res.status(401).json("Invalid token");
+    } catch (error) {
+      return res.sendStatus(400).json({ error });
     }
-  }
-  catch(error) {
-    error.message;
   }
 }
 
