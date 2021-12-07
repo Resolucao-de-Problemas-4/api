@@ -28,7 +28,10 @@ class AuthUserController {
 
       const token = jwt.sign({ id: user.id }, "secretrp", { expiresIn: "1d" });
 
-      return res.status(200).json({ name: user.name, token });
+      delete user.password
+      delete user.id
+
+      return res.status(200).json({ user, token });
     } catch (err) {
       return res.status(400).json({
         message: err.message,
