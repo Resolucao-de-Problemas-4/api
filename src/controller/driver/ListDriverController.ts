@@ -9,6 +9,7 @@ class ListDriverController {
     async execute(request: Request, response: Response): Promise<Response> {
          
         try {
+            
             const drivers = await prisma.driver.findMany({
                 select:{
                     name: true
