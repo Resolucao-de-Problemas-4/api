@@ -29,7 +29,7 @@ model driver {
 }
 
 model car {
-  plate    String  @id
+  plate    String  @id @unique
   ownerCNH String
   chassi   String
   renavan  String
