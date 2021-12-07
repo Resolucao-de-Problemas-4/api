@@ -48,9 +48,12 @@ class CreateCarController {
           marca,
         },
       });
-      return res.sendStatus(200).json("feito");
+      return res.status(200).json({
+        model,
+        plate,
+      });
     } catch (error) {
-      return res.sendStatus(400).json(error.message);
+      return res.status(400).json(error.message);
     }
   }
 }

@@ -39,9 +39,9 @@ class CreateRaceController {
         },
       });
 
-      return res.sendStatus(200).json("HELLO WORLD");
+      return res.status(200).json("Corrida Criada!");
     } catch (error) {
-      return res.sendStatus(400).json({ error });
+      return res.status(400).json({ error });
     }
   }
 }
