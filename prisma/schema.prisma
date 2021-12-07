@@ -48,6 +48,7 @@ model race{
   horaSolicitacao String
   horaInicial String?
   horaFinal String?
+  valorViagem Float?
   pagamentoAutorizado Boolean?
   latitudeOrigem String
   longitudeOrigem String
