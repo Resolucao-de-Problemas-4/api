@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "race" ALTER COLUMN "idCliente" SET DATA TYPE TEXT,
+ALTER COLUMN "idDriver" SET DATA TYPE TEXT;
