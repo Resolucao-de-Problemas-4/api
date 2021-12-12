@@ -19,7 +19,7 @@ class ListRaceControllerUser {
 
       const races = await prisma.race.findMany({
         where: {
-          idCliente: Number(id)
+          idCliente: id
         }
       });
       

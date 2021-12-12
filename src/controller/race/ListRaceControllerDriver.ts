@@ -19,7 +19,7 @@ class ListRaceControllerDriver {
 
       const races = await prisma.race.findMany({
         where: {
-          idDriver: Number(id),
+          idDriver: id,
         },
       });
       return response.status(200).json(races);

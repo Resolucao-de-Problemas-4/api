@@ -19,7 +19,7 @@ class CreateCarController {
 
       const driver = await prisma.driver.findUnique({
         where: {
-          id: Number(id),
+          id: id,
         },
       });
 
@@ -51,7 +51,7 @@ class CreateCarController {
 
       await prisma.driver.update({
         where:{
-          id:Number(id)
+          id: id
         },data:{
           carSigned: true
         }

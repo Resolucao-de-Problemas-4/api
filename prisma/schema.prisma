@@ -8,7 +8,7 @@ datasource db {
 }
 
 model user {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @default(uuid())
   name     String
   email    String   @unique
   birthday DateTime
@@ -17,7 +17,7 @@ model user {
 }
 
 model driver {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(uuid())
   name        String
   CNH         String  @unique
   address     String
@@ -25,7 +25,7 @@ model driver {
   email       String  @unique
   status      Boolean @default(false)
   password    String
-  carSigned Boolean @default(false)
+  carSigned   Boolean @default(false)
   car         car[]
 }
 
@@ -41,21 +41,21 @@ model car {
   driver   driver  @relation(fields: [ownerCNH], references: [CNH])
 }
 
-model race{
-  id String @id @default(uuid())
-  idCliente Int 
-  idDriver Int?
-  dataViagem DateTime
-  horaSolicitacao String
-  horaInicial String?
-  horaFinal String?
-  valorViagem Float?
+model race {
+  id                  String   @id @default(uuid())
+  idCliente           String
+  idDriver            String?
+  dataViagem          DateTime
+  horaSolicitacao     String
+  horaInicial         String?
+  horaFinal           String?
+  valorViagem         Float?
   pagamentoAutorizado Boolean?
-  latitudeOrigem String
-  longitudeOrigem String
-  latitudeFinal String
-  longitudeFinal String
-  avaliacaoViagem Int?
-  viagemConcluida Boolean @default(false)
-  corridaAceita Boolean @default(false)
+  latitudeOrigem      String
+  longitudeOrigem     String
+  latitudeFinal       String
+  longitudeFinal      String
+  avaliacaoViagem     Int?
+  viagemConcluida     Boolean  @default(false)
+  corridaAceita       Boolean  @default(false)
 }

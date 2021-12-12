@@ -25,16 +25,26 @@ class FindRaceController {
         },
       });
 
-      races.forEach(async (race) => {
+      
+      races.forEach((race) => {
+
+        let count = 0;
+
         denied.forEach((element) => {
-          if (race.id !== element.corridaID) {
-            return response.status(200).json(race);
+          if (race.id === element.corridaID) {
+            count++;
+            
           }
         });
+
+        if (count === 0) {
+          return response.status(200).json(race);
+        }
+        
       });
 
-      return response.status(401);
 
+      return response.status(201).json("NENHUMA CORRIDA NO MOMENTO");
     } catch (err) {
       return response.status(400).json({
         message: err.message,

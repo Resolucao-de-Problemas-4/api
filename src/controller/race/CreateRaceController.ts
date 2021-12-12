@@ -29,7 +29,7 @@ class CreateRaceController {
 
       const user = await prisma.user.findUnique({
         where:{
-          id: Number(id)
+          id: id
         }
       })
 
@@ -40,7 +40,7 @@ class CreateRaceController {
 
       await prisma.race.create({
         data: {
-          idCliente: Number(id),
+          idCliente: id,
           dataViagem: date,
           horaSolicitacao: hour,
           latitudeOrigem: latitudeOrigem,
