@@ -24,7 +24,7 @@ class UpdateRaceController {
       const date = new Date();
       const hour = date.getHours() + ":" + date.getMinutes();
 
-      const race = await prisma.race.findUnique({
+      const race = await prisma.race.findFirst({
         where:{
           id: corridaID
         }

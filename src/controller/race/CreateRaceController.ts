@@ -20,7 +20,10 @@ class CreateRaceController {
         latitudeOrigem,
         longitudeFinal,
         latitudeFinal,
+        preco,
       } = req.body;
+
+      console.log(req.body)
 
       const hour = date.getHours() + ":" + date.getMinutes();
 
@@ -28,17 +31,16 @@ class CreateRaceController {
       const { id } = data as TokenPayload;
 
       const user = await prisma.user.findUnique({
-        where:{
-          id: id
-        }
-      })
+        where: {
+          id: id,
+        },
+      });
 
-      if(!user){
-        throw new Error("Usuário não encontrado")
+      if (!user) {
+        throw new Error("Usuário não encontrado");
       }
 
-
-      await prisma.race.create({
+      const corrida = await prisma.race.create({
         data: {
           idCliente: id,
           dataViagem: date,
@@ -47,10 +49,11 @@ class CreateRaceController {
           longitudeOrigem: longitudeOrigem,
           latitudeFinal: latitudeFinal,
           longitudeFinal: longitudeFinal,
+          valorViagem: Number(preco),
         },
       });
 
-      return res.status(200).json("Corrida Criada!");
+      return res.status(200).json({corridaID:corrida.id});
     } catch (error) {
       return res.status(400).json({ error });
     }

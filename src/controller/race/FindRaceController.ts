@@ -21,28 +21,26 @@ class FindRaceController {
 
       const races = await prisma.race.findMany({
         where: {
-          corridaAceita: false,
+          AND: {
+            corridaAceita: { equals: false },
+            corridaCancelada: { equals: false }
+          },
         },
       });
 
-      
       races.forEach((race) => {
-
         let count = 0;
 
         denied.forEach((element) => {
           if (race.id === element.corridaID) {
             count++;
-            
           }
         });
 
         if (count === 0) {
           return response.status(200).json(race);
         }
-        
       });
-
 
       return response.status(201).json("NENHUMA CORRIDA NO MOMENTO");
     } catch (err) {

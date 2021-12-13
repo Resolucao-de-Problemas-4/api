@@ -58,4 +58,5 @@ model race {
   avaliacaoViagem     Int?
   viagemConcluida     Boolean  @default(false)
   corridaAceita       Boolean  @default(false)
+  corridaCancelada    Boolean  @default(false)
 }
