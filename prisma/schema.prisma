@@ -55,6 +55,7 @@ model race {
   longitudeOrigem     String
   latitudeFinal       String
   longitudeFinal      String
+  destinoFinal        String?
   avaliacaoViagem     Int?
   viagemConcluida     Boolean  @default(false)
   corridaAceita       Boolean  @default(false)

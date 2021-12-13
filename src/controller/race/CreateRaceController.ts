@@ -21,6 +21,7 @@ class CreateRaceController {
         longitudeFinal,
         latitudeFinal,
         preco,
+        destinoFinal
       } = req.body;
 
       console.log(req.body)
@@ -50,6 +51,7 @@ class CreateRaceController {
           latitudeFinal: latitudeFinal,
           longitudeFinal: longitudeFinal,
           valorViagem: Number(preco),
+          destinoFinal: destinoFinal
         },
       });
 
