@@ -16,12 +16,22 @@ class VerifyRaceController {
         throw new Error("Corrida não encontrada");
       }
 
+      if(corrida.viagemConcluida === true){
+        throw new Error('Corrida Finalizada!')
+      }
+
+      if(corrida.corridaCancelada === true){
+        throw new Error("Corrida cancelada");
+      }
+
       if (corrida.corridaAceita === true) {
         const motorista = await prisma.driver.findFirst({
           where: {
             id: corrida.idDriver,
           },
         });
+      
+      
 
         const carro = await prisma.car.findFirst({
           where: {
@@ -34,7 +44,7 @@ class VerifyRaceController {
           return response.status(201).json('Ainda não')
       }
     } catch (error) {
-        return response.status(400).json('Corrida não encontrada')
+        return response.status(400).json(error.message)
     }
   }
 }
