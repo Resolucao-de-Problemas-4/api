@@ -38,6 +38,10 @@ class UpdateRaceController {
         throw new Error("Corrida já aceita!");
       }
 
+      if(race.corridaCancelada === true){
+        throw new Error ("Corrida cancelada.")
+      }
+
       await prisma.race.update({
         where: {
           id: corridaID
