@@ -16,11 +16,11 @@ class VerifyRaceController {
         throw new Error("Corrida não encontrada");
       }
 
-      if(corrida.viagemConcluida === true){
-        throw new Error('Corrida Finalizada!')
+      if (corrida.viagemConcluida === true) {
+        throw new Error("Corrida Finalizada!");
       }
 
-      if(corrida.corridaCancelada === true){
+      if (corrida.corridaCancelada === true) {
         throw new Error("Corrida cancelada");
       }
 
@@ -30,8 +30,6 @@ class VerifyRaceController {
             id: corrida.idDriver,
           },
         });
-      
-      
 
         const carro = await prisma.car.findFirst({
           where: {
@@ -39,12 +37,34 @@ class VerifyRaceController {
           },
         });
 
-        return response.status(200).json({ nome: motorista.name, carro });
-      } else{
-          return response.status(201).json('Ainda não')
+        const user = await prisma.user.findFirst({
+          where: {
+            id: corrida.idCliente,
+          },
+        });
+
+        delete motorista.password;
+        delete motorista.carSigned;
+        delete motorista.CNH;
+        delete motorista.address;
+        delete motorista.status;
+        delete motorista.id;
+
+        delete carro.ownerCNH;
+        delete carro.chassi;
+        delete carro.status;
+
+        delete user.id;
+        delete user.password;
+        delete user.birthday;
+        delete user.address;
+
+        return response.status(200).json({ corrida, motorista, carro, user });
+      } else {
+        return response.status(201).json("Ainda não");
       }
     } catch (error) {
-        return response.status(400).json(error.message)
+      return response.status(400).json(error.message);
     }
   }
 }
