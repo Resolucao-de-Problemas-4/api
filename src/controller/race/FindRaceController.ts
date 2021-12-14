@@ -32,23 +32,21 @@ class FindRaceController {
         throw new Error("NENHUMA CORRIDA NO MOMENTO");
       }
 
-      try {
-        races.forEach((race) => {
-          let count = 0;
+      races.forEach((race) => {
+        let count = 0;
 
-          denied.forEach((element) => {
-            if (race.id === element.corridaID) {
-              count++;
-            }
-          });
-
-          if (count === 0) {
-            return response.status(200).json(race);
+        denied.forEach((element) => {
+          if (race.id === element.corridaID) {
+            count++;
           }
         });
-      } catch (error) {}
 
-      throw new Error("NENHUMA CORRIDA NO MOMENTO");
+        if (count === 0) {
+          return response.status(200).json(race);
+        }
+      });
+
+      return response.status(201).json();
     } catch (err) {
       return response.status(400).json({
         message: err.message,
