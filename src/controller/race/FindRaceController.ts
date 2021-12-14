@@ -23,26 +23,32 @@ class FindRaceController {
         where: {
           AND: {
             corridaAceita: { equals: false },
-            corridaCancelada: { equals: false }
+            corridaCancelada: { equals: false },
           },
         },
       });
 
-      races.forEach((race) => {
-        let count = 0;
+      if (!races) {
+        throw new Error("NENHUMA CORRIDA NO MOMENTO");
+      }
 
-        denied.forEach((element) => {
-          if (race.id === element.corridaID) {
-            count++;
+      try {
+        races.forEach((race) => {
+          let count = 0;
+
+          denied.forEach((element) => {
+            if (race.id === element.corridaID) {
+              count++;
+            }
+          });
+
+          if (count === 0) {
+            return response.status(200).json(race);
           }
         });
+      } catch (error) {}
 
-        if (count === 0) {
-          return response.status(200).json(race);
-        }
-      });
-
-      return response.status(201).json("NENHUMA CORRIDA NO MOMENTO");
+      throw new Error("NENHUMA CORRIDA NO MOMENTO");
     } catch (err) {
       return response.status(400).json({
         message: err.message,
