@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from ".prisma/client";
 import jwt from "jsonwebtoken";
+import { env } from "process";
 
 const prismaClient = new PrismaClient();
 
@@ -26,12 +27,22 @@ class AuthUserController {
         throw new Error("senha errada");
       }
 
-      const token = jwt.sign({ id: user.id }, "secretrp", { expiresIn: "1d" });
+      const corrida = await prismaClient.race.findFirst({
+        where: {
+          AND: {
+            idCliente: user.id,
+            corridaCancelada: false,
+            viagemConcluida: false
+          }
+        }
+      })
+
+      const token = jwt.sign({ id: user.id }, env.SECRET_TOKEN, { expiresIn: "1d" });
 
       delete user.password
       delete user.id
 
-      return res.status(200).json({ user, token });
+      return res.status(200).json({ user, token, corrida });
     } catch (err) {
       return res.status(400).json({
         message: err.message,

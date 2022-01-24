@@ -10,7 +10,7 @@ interface TokenPayload {
   exp: number;
 }
 
-class UpdateRaceController {
+class FinishRaceController {
   async execute(request: Request, response: Response): Promise<Response> {
     try {
       const { token, corridaID } = request.body;
@@ -35,10 +35,6 @@ class UpdateRaceController {
         throw new Error("Essa corrida não existe...")
       }
 
-      if(race.corridaAceita === true){
-        throw new Error("Corrida já aceita!");
-      }
-
       if(race.corridaCancelada === true){
         throw new Error ("Corrida cancelada.")
       }
@@ -47,9 +43,8 @@ class UpdateRaceController {
         where: {
           id: corridaID
         }, data:{
-          horaInicial:hour,
-          idDriver: id,
-          corridaAceita: true
+          horaFinal:hour,
+          viagemConcluida:true
         }
       });
 
@@ -63,4 +58,4 @@ class UpdateRaceController {
     }
   }
 }
-export { UpdateRaceController };
+export { FinishRaceController };

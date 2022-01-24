@@ -20,6 +20,10 @@ class RaceCancelController {
         throw new Error("Corrida já cancelada");
       }
 
+      if(corrida.viagemConcluida === true){
+        throw new Error("Corrida já finalizada")
+      }
+
       await prisma.race.update({
         where: { id: idCorrida },
         data: {

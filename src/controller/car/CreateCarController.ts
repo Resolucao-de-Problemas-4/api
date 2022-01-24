@@ -1,6 +1,7 @@
 import { PrismaClient } from ".prisma/client";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { env } from "process";
 const prisma = new PrismaClient();
 
 interface TokenPayload {
@@ -14,7 +15,7 @@ class CreateCarController {
     try {
       const { token, plate, chassi, renavam, year, model, marca } = req.body;
 
-      const data = jwt.verify(token, "secretrp");
+      const data = jwt.verify(token, env.SECRET_TOKEN);
       const { id } = data as TokenPayload;
 
       const driver = await prisma.driver.findUnique({

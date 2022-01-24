@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from ".prisma/client";
 import jwt from "jsonwebtoken";
+import { env } from "process";
 
 const prismaClient = new PrismaClient();
 
@@ -26,7 +27,7 @@ class AuthDriverController {
         throw new Error("senha errada");
       }
 
-      const token = jwt.sign({ id: driver.id }, "secretrp", { expiresIn: "1d" });
+      const token = jwt.sign({ id: driver.id }, env.SECRET_TOKEN, { expiresIn: "1d" });
 
       delete driver.password
       delete driver.id
