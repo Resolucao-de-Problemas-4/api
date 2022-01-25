@@ -36,13 +36,61 @@ class AuthUserController {
           }
         }
       })
-
+      
       const token = jwt.sign({ id: user.id }, env.SECRET_TOKEN, { expiresIn: "1d" });
+      
+      if(corrida !== null){
+        if(corrida.corridaAceita === true){
+          
+          const motorista = await prismaClient.driver.findFirst({
+            where: {
+              id: corrida.idDriver
+            }
+          })
 
-      delete user.password
-      delete user.id
+          const carro = await prismaClient.car.findFirst({
+            where: {
+              ownerCNH: motorista.CNH
+            }
+          })
+          
+          delete motorista.password;
+          delete motorista.carSigned;
+          delete motorista.CNH;
+          delete motorista.address;
+          delete motorista.status;
+          delete motorista.id;
+          
+          delete carro.ownerCNH;
+          delete carro.chassi;
+          delete carro.status;
+          
+          delete user.password
+          delete user.id
+          delete corrida.horaFinal
+          delete corrida.horaInicial
+          delete corrida.idDriver
+    
+          delete user.id;
+          delete user.password;
+          delete user.birthday;
+          delete user.address;
 
-      return res.status(200).json({ user, token, corrida });
+          return res.status(200).json({ user, token, corrida, carro, motorista });
+        } else {
+          await prismaClient.race.update({
+            where: {
+              id: corrida.id
+            },
+            data: { 
+              corridaCancelada: true,
+              viagemConcluida: true
+            },
+          })
+          return res.status(200).json({ user, token, corrida});
+        }
+      }
+        return res.status(200).json({ user, token, corrida});
     } catch (err) {
       return res.status(400).json({
         message: err.message,
