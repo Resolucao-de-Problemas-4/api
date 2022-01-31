@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "cartao" ALTER COLUMN "cvv" SET DATA TYPE TEXT;
