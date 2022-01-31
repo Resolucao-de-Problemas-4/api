@@ -45,7 +45,6 @@ class CreateCardController {
         throw new Error('User not found')
       }
 
-
       const salt = bcrypt.genSaltSync(10);
       const hashCVV = bcrypt.hashSync(cvv, salt);
 
@@ -60,7 +59,6 @@ class CreateCardController {
       })
 
       delete card.cvv
-
 
       return response.status(201).json({ card})
     } catch (error) {
