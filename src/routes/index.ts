@@ -5,6 +5,7 @@ import { authUserRoutes } from './authuser.routes'
 import { authDriverRoutes } from './authdriver.routes'
 import { raceRoutes } from './race.routes'
 import { carRoutes } from './car.routes'
+import { cardRoutes } from './card.routes'
 
 
 const router = Router()
@@ -15,5 +16,5 @@ authDriverRoutes(router)
 userRoutes(router)
 driverRoutes(router)
 carRoutes(router)
-
+cardRoutes(router)
 export {router}
