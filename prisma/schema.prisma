@@ -14,6 +14,7 @@ model user {
   birthday DateTime
   address  String
   password String
+  cartao cartao[]
 }
 
 model driver {
@@ -60,4 +61,15 @@ model race {
   viagemConcluida     Boolean  @default(false)
   corridaAceita       Boolean  @default(false)
   corridaCancelada    Boolean  @default(false)
+}
+
+model cartao {
+  ID String @id @default(uuid())
+  numero String @unique
+  cvv String 
+  dataValidade String
+  nome String
+  idUsuario String 
+  user   user  @relation(fields: [idUsuario], references: [id])
+
 }

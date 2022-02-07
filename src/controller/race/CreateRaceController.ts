@@ -24,9 +24,6 @@ class CreateRaceController {
         preco,
         destinoFinal
       } = req.body;
-
-      console.log(req.body)
-
       const hour = date.getHours() + ":" + date.getMinutes();
 
       const data = jwt.verify(token, env.SECRET_TOKEN);
