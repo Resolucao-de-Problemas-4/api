@@ -22,6 +22,8 @@ class CreateCardController {
         token,
       } = request.body;
 
+      console.log(request.body)
+
       const cardV = await prisma.cartao.findUnique({
         where:{
           numero:number

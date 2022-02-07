@@ -36,8 +36,6 @@ class DeleteCardController {
             ID
           }
       })
-      console.log(card)
-
       if (card){
           await prisma.cartao.delete({
               where: {
@@ -48,7 +46,7 @@ class DeleteCardController {
           throw new Error('Card not found')
       }
       
-      return response.status(200).json(card);
+      return response.status(200).json({message:'Excluído!'});
     } catch (err) {
       return response.status(400).json({
         message: err.message,

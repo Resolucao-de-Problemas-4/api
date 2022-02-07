@@ -7,7 +7,6 @@ const prisma = new PrismaClient();
 class CreateDriverController {
   async execute(request: Request, response: Response) {
 
-    console.log(request.body)
     try {
       const {
         driverName,
