@@ -19,8 +19,6 @@ class CreateUserController {
       } = request.body;
       const date = new Date(customerBirthday)
       
-      
-
       const userAlreadyExists = await prisma.user.findFirst({
         where: {
           email: customerEmail,
