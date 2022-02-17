@@ -1,5 +1,5 @@
 import { PrismaClient } from ".prisma/client";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "process";
 
@@ -40,13 +40,17 @@ class GetLocalizationController {
                 }
             })
 
+            if(!localization){
+                throw new Error('Localization not found or already finished!')
+            }
+
             delete localization.driverID
             delete localization.corridaID
             delete localization.userID
 
             return res.status(201).json(localization)
         } catch (err) {
-            return res.status(400).json(err)
+            return res.status(400).json(err.message)
         }
     }
 }

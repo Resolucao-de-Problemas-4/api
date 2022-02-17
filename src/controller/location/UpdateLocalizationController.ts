@@ -53,7 +53,9 @@ class UpdateLocalizationController {
                 where: {
                     driverID: id
                 }, data: {
-                    lat, long, lastUpdated: date
+                    lat,
+                    long,
+                    lastUpdated: date
                 }
             })
 
