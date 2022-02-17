@@ -18,15 +18,16 @@ model user {
 }
 
 model driver {
-  id          String  @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
-  CNH         String  @unique
+  CNH         String    @unique
   address     String
   phoneNumber String
-  email       String  @unique
-  status      Boolean @default(false)
+  email       String    @unique
+  status      Boolean   @default(false)
   password    String
-  carSigned   Boolean @default(false)
+  carSigned   Boolean   @default(false)
+  Localization    Localization?
   car         car[]
 }
 
@@ -43,7 +44,7 @@ model car {
 }
 
 model race {
-  id                  String   @id @default(uuid())
+  id                  String    @id @default(uuid())
   idCliente           String
   idDriver            String?
   dataViagem          DateTime
@@ -58,9 +59,10 @@ model race {
   longitudeFinal      String
   destinoFinal        String?
   avaliacaoViagem     String?
-  viagemConcluida     Boolean  @default(false)
-  corridaAceita       Boolean  @default(false)
-  corridaCancelada    Boolean  @default(false)
+  viagemConcluida     Boolean   @default(false)
+  corridaAceita       Boolean   @default(false)
+  corridaCancelada    Boolean   @default(false)
+  Localization            Localization?
   rating              rating[]
 }
 
@@ -81,4 +83,14 @@ model cartao {
   idUsuario    String
   user         user   @relation(fields: [idUsuario], references: [id])
 
+}
+
+model Localization {
+  ID        String @id @default(uuid())
+  lat       Float
+  long      Float
+  driverID  String @unique
+  corridaID String @unique
+  race      race   @relation(fields: [corridaID], references: [id])
+  driver    driver @relation(fields: [driverID], references: [id])
 }
