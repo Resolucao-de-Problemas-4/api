@@ -7,6 +7,7 @@ import { raceRoutes } from './race.routes'
 import { carRoutes } from './car.routes'
 import { cardRoutes } from './card.routes'
 import { ratingRoutes } from './rating.routes'
+import {localizationRoutes} from './localization.routes'
 
 
 const router = Router()
@@ -19,5 +20,6 @@ driverRoutes(router)
 carRoutes(router)
 cardRoutes(router)
 ratingRoutes(router)
+localizationRoutes(router)
 
-export { router }
+export { router } 
