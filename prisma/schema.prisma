@@ -94,6 +94,7 @@ model localization {
   corridaID   String   @unique
   userID      String   @unique
   lastUpdated DateTime?
+  route       Int      @default(1)
   user        user     @relation(fields: [userID], references: [id])
   race        race     @relation(fields: [corridaID], references: [id])
   driver      driver   @relation(fields: [driverID], references: [id])
