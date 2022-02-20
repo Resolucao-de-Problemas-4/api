@@ -1,10 +1,7 @@
-import { PrismaClient } from ".prisma/client";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "process";
-
-const prisma = new PrismaClient();
-
+import { prisma } from "../../services/prisma";
 interface TokenPayload {
   id: string;
   iat: number;

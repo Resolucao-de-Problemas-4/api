@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from ".prisma/client";
 import jwt from "jsonwebtoken";
 import { env } from "process";
-
-const prismaClient = new PrismaClient();
+import {prisma} from '../../services/prisma'
 
 class AuthDriverController {
   async execute(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
 
-      const driver = await prismaClient.driver.findUnique({
+      const driver = await prisma.driver.findUnique({
         where: {
           email,
         },

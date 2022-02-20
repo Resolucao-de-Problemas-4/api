@@ -1,9 +1,8 @@
-import { PrismaClient } from ".prisma/client";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "process";
+import { prisma } from "../../services/prisma";
 
-const prisma = new PrismaClient();
 
 interface TokenPayload {
     id: string;
@@ -65,6 +64,13 @@ class CreateLocalizationController {
 
             }
 
+            if(race.corridaCancelada === true ){
+                throw new Error('Race Canceled')
+            }
+
+            if(race.viagemConcluida === true){
+                throw new Error('Race finished')
+            }
 
             await prisma.localization.create({
                 data: {

@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import { PrismaClient } from ".prisma/client";
 import jwt from "jsonwebtoken";
 import { env } from "process";
-
-const prismaClient = new PrismaClient();
+import {prisma} from '../../services/prisma'
 
 class AuthUserController {
   async execute(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
 
-      const user = await prismaClient.user.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           email,
         },
@@ -27,7 +25,7 @@ class AuthUserController {
         throw new Error("senha errada");
       }
 
-      const corrida = await prismaClient.race.findFirst({
+      const corrida = await prisma.race.findFirst({
         where: {
           AND: {
             idCliente: user.id,
@@ -42,13 +40,13 @@ class AuthUserController {
       if(corrida !== null){
         if(corrida.corridaAceita === true){
           
-          const motorista = await prismaClient.driver.findFirst({
+          const motorista = await prisma.driver.findFirst({
             where: {
               id: corrida.idDriver
             }
           })
 
-          const carro = await prismaClient.car.findFirst({
+          const carro = await prisma.car.findFirst({
             where: {
               ownerCNH: motorista.CNH
             }
@@ -78,7 +76,7 @@ class AuthUserController {
 
           return res.status(200).json({ user, token, corrida, carro, motorista });
         } else {
-          await prismaClient.race.update({
+          await prisma.race.update({
             where: {
               id: corrida.id
             },

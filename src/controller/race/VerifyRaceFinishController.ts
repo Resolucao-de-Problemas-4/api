@@ -1,7 +1,6 @@
-import { PrismaClient } from ".prisma/client";
-import { Request, Response } from "express";
+import { prisma } from '../../services/prisma'; import { Request, Response } from "express";
 
-const prisma = new PrismaClient();
+
 
 class VerifyRaceFinishController {
     async execute(request: Request, response: Response): Promise<Response> {

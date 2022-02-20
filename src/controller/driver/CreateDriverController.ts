@@ -1,8 +1,6 @@
-import { PrismaClient } from ".prisma/client";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../services/prisma";
 
 class CreateDriverController {
   async execute(request: Request, response: Response) {
